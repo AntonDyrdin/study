@@ -82,5 +82,5 @@ test:
 production:
   <<: *default
   database: study_production
-  username: study
-  password: <%= ENV['STUDY_DATABASE_PASSWORD'] %>
+  url:  <%= ENV["DATABASE_URL"] %>
+  pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
