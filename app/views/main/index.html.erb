@@ -1,0 +1,41 @@
+<head>
+  <% content_for :title, "PostgreSQL" %>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&amp;subset=cyrillic" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+</head>
+<body>
+    <div style="display: flex; flex-direction: column;">
+        <textarea placeholder="Напишите свой запрос здесь" class="input" id="query" cols="20" rows="17"></textarea>
+
+        <button onClick="executeSql()" style="height: 50px;">Выполнить</button>
+        <textarea placeholder="Результат" class="output" id="output" cols="20" rows="17"></textarea>
+
+    <div>
+</body>
+<script>
+document.addEventListener('keyup', doc_keyUp, false);
+function doc_keyUp(e) {
+
+    // this would test for whichever key is 40 and the ctrl key at the same time
+    if(e.code == "Enter"){
+      executeSql();
+    }
+}
+//$('#query').val();
+
+  function executeSql(){
+    console.log("Asdasda");
+    var query=$("#query").val();
+  
+    $.ajax({
+      url: '<%=execute_sql_path()%>'+'?query='+query,
+      method: 'GET',
+      success: function(data){
+        console.log(data);
+        $('#output').val(data);
+      }
+    });
+  }
+    
+</script>
