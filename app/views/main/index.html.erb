@@ -25,15 +25,23 @@ function doc_keyUp(e) {
 //$('#query').val();
 
   function executeSql(){
-    console.log("Asdasda");
-    var query=$("#query").val();
-  
-    $.ajax({
-      url: '<%=execute_sql_path()%>'+'?query='+query,
-      method: 'GET',
-      success: function(data){
-        console.log(data);
-        $('#output').val(data);
+    var query=$("#query").val().split('\n');
+    response = "";
+    $('#output').val("");
+    query.forEach((subquery) => {
+      if(subquery != ""){
+        $.ajax({
+          url: '/execute_sql/'+subquery,
+          method: 'GET',
+          success: function(data){
+            console.log(data);
+             $('#output').val( $('#output').val() +  '\n' + data);
+          },
+          error: function(data){
+            console.log(data);
+          $('#output').val( $('#output').val() + '\n'+ '"' + subquery + '"'+ " => "+data);
+          }
+        });
       }
     });
   }

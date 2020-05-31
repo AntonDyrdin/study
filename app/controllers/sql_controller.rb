@@ -1,10 +1,9 @@
 class SqlController < ActionController::API
     
     def execute_sql
-        response = "Ошибка выполнения"
-
         begin
-            response = ActiveRecord::Base.connection.exec_query(params['query']).to_hash
+            response = ActiveRecord::Base.connection.exec_query(params['query']).to_a
+            response = JSON.pretty_generate( response )
         rescue => exception
             response = exception.message + '\n' + exception.backtrace[0] 
         end
