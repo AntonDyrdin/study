@@ -9,7 +9,7 @@ class SqlController < ActionController::API
         end
 
         if response == "[\n\n]"
-            response = params['query'].gsub('**point**', '.') + "\n\n"
+            response = "Выполнено: " + params['query'].gsub('**point**', '.') + "\n\n"
         end
         render plain: response
     end

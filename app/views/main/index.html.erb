@@ -38,7 +38,7 @@ function doc_keyUp(e) {
       });
       subquery = lines_without_comments.join(' ');
 
-      if(subquery != ""){
+      if(subquery.trim() != ""){
         $.ajax({
           url: '/execute_sql/'+subquery,
           method: 'GET',
