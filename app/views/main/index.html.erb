@@ -25,10 +25,19 @@ function doc_keyUp(e) {
 //$('#query').val();
 
   function executeSql(){
-    var query=$("#query").val().split('\n');
+    var query=$("#query").val().split(';');
     response = "";
     $('#output').val("");
     query.forEach((subquery) => {
+      var lines = subquery.split('\n');
+      var lines_without_comments = []
+      lines.forEach((line) => {
+        if(line.trim()[0] != '-' || line.trim()[1] != '-' ){
+          lines_without_comments.push(line.trim().split('.').join('**point**'));
+        }
+      });
+      subquery = lines_without_comments.join(' ');
+
       if(subquery != ""){
         $.ajax({
           url: '/execute_sql/'+subquery,
